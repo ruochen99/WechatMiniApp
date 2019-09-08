@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="header">
+    <image class="plus" src="../../assets/plus.png" bindtap='addTodoHandle'/>
+    <input class="new-todo" value="{{ input }}" placeholder="Add Task..." auto-focus bindinput="inputChangeHandle" bindconfirm="addTodoHandle"/>
+  </view>
+  <!-- 若list不为空，进入以下代码块 -->
+  <block wx:if="{{ todos.length }}">
+    <view class="todos">
+      <!--展示所有任务 -->
+      <view class="item{{ item.completed ? ' completed' : '' }}" wx:for="{{ todos }}" wx:key="{{ index }}" bindtap="toggleTodoHandle" data-index="{{ index }}">
+        <!-- 根据任务状态定义icon的type -->
+        <icon class="checkbox" type="{{ item.completed ? 'success' : 'circle' }}"/>
+        <text class="name">{{ item.name }}</text>
+        <icon class="remove" type="clear" size="16" catchtap="removeTodoHandle" data-index="{{ index }}"/>
+      </view>
+    </view>
+    <view class="footer">
+      <text wx:if="{{ leftCount }}">{{ leftCount }} {{ leftCount === 1 ? 'item' : 'items' }} left</text>
+    </view>
+  </block>
+  <!-- 若list为空，进入以下代码块 -->
+  <block wx:else>
+    <view class="empty">
+      <text class="content">Your todo list is empty. :)</text>
+    </view>
+  </block>
+</view>
